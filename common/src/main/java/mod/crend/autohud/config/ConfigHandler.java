@@ -6,6 +6,7 @@ public class ConfigHandler {
         init();
     }
 
+    public boolean dynamicOnLoad() { return Config.dynamicOnLoad; }
     public int timeRevealed() { return Config.ticksRevealed; }
     public boolean animationMove() { return Config.animationMove; }
     public boolean animationFade() { return Config.animationFade; }
