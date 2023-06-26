@@ -1,27 +1,22 @@
 package mod.crend.autohud.config;
 
-import mod.crend.autoyacl.ConfigStore;
-
 public class ConfigHandler {
-
-    public static final ConfigStore<Config> CONFIG_STORE = new ConfigStore<>(Config.class);
 
     public ConfigHandler() {
         init();
     }
 
-    public boolean dynamicOnLoad() { return CONFIG_STORE.config().dynamicOnLoad; }
-    public int timeRevealed() { return CONFIG_STORE.config().ticksRevealed; }
-    public boolean animationMove() { return CONFIG_STORE.config().animationMove; }
-    public boolean animationFade() { return CONFIG_STORE.config().animationFade; }
-    public boolean animationNone() { return !CONFIG_STORE.config().animationMove && !CONFIG_STORE.config().animationFade; }
-    public double animationSpeed() { return CONFIG_STORE.config().animationSpeed; }
-    public double animationSpeedMoveIn() { return CONFIG_STORE.config().animationSpeeds.moveIn == 0 ? CONFIG_STORE.config().animationSpeed : CONFIG_STORE.config().animationSpeeds.moveIn; }
-    public double animationSpeedMoveOut() { return CONFIG_STORE.config().animationSpeeds.moveOut == 0 ? CONFIG_STORE.config().animationSpeed : CONFIG_STORE.config().animationSpeeds.moveOut; }
-    public double animationSpeedFadeIn() { return CONFIG_STORE.config().animationSpeeds.fadeIn == 0 ? CONFIG_STORE.config().animationSpeed : CONFIG_STORE.config().animationSpeeds.fadeIn; }
-    public double animationSpeedFadeOut() { return CONFIG_STORE.config().animationSpeeds.fadeOut == 0 ? CONFIG_STORE.config().animationSpeed : CONFIG_STORE.config().animationSpeeds.fadeOut; }
-    public RevealType revealType() { return CONFIG_STORE.config().revealType; }
-    public boolean statusEffectTimer() { return CONFIG_STORE.config().statusEffectTimer; }
+    public int timeRevealed() { return Config.ticksRevealed; }
+    public boolean animationMove() { return Config.animationMove; }
+    public boolean animationFade() { return Config.animationFade; }
+    public boolean animationNone() { return !Config.animationMove && !Config.animationFade; }
+    public double animationSpeed() { return Config.animationSpeed; }
+    public double animationSpeedMoveIn() { return Config.animationSpeeds.moveIn == 0 ? Config.animationSpeed : Config.animationSpeeds.moveIn; }
+    public double animationSpeedMoveOut() { return Config.animationSpeeds.moveOut == 0 ? Config.animationSpeed : Config.animationSpeeds.moveOut; }
+    public double animationSpeedFadeIn() { return Config.animationSpeeds.fadeIn == 0 ? Config.animationSpeed : Config.animationSpeeds.fadeIn; }
+    public double animationSpeedFadeOut() { return Config.animationSpeeds.fadeOut == 0 ? Config.animationSpeed : Config.animationSpeeds.fadeOut; }
+    public RevealType revealType() { return Config.revealType; }
+    public boolean statusEffectTimer() { return Config.statusEffectTimer; }
 
     public abstract static class IComponent {
         IComponent(Config.IComponent config, Config.AdvancedComponent values, Config.DefaultValues defaultValues) {
@@ -113,28 +108,28 @@ public class ConfigHandler {
     public BooleanComponent mountJumpBar() { return mountJumpBar; }
     public PolicyComponent mountHealth() { return mountHealth; }
     public BooleanComponent hotbar() { return hotbar; }
-    public boolean isHotbarOnSlotChange() { return CONFIG_STORE.config().hotbar.onSlotChange; }
-    public boolean isHotbarOnLowDurability() { return CONFIG_STORE.config().hotbar.onLowDurability; }
-    public int getHotbarDurabilityPercentage() { return CONFIG_STORE.config().hotbar.durabilityPercentage; }
-    public int getHotbarDurabilityTotal() { return CONFIG_STORE.config().hotbar.durabilityTotal; }
-    public float getHotbarItemsMaximumFade() { return CONFIG_STORE.config().hotbar.maximumFadeHotbarItems; }
+    public boolean isHotbarOnSlotChange() { return Config.hotbar.onSlotChange; }
+    public boolean isHotbarOnLowDurability() { return Config.hotbar.onLowDurability; }
+    public int getHotbarDurabilityPercentage() { return Config.hotbar.durabilityPercentage; }
+    public int getHotbarDurabilityTotal() { return Config.hotbar.durabilityTotal; }
+    public float getHotbarItemsMaximumFade() { return Config.hotbar.maximumFadeHotbarItems; }
     public BooleanComponent statusEffects() { return statusEffects; }
-    public boolean hidePersistentStatusEffects() { return CONFIG_STORE.config().hidePersistentStatusEffects; }
+    public boolean hidePersistentStatusEffects() { return Config.hidePersistentStatusEffects; }
     public BooleanComponent scoreboard() { return scoreboard; }
-    public boolean shouldRevealScoreboardOnTitleChange() { return CONFIG_STORE.config().scoreboard.scoreboard.onChange; }
-    public boolean shouldRevealScoreboardOnScoreChange() { return CONFIG_STORE.config().scoreboard.onScoreChange; }
-    public boolean shouldRevealScoreboardOnTeamChange() { return CONFIG_STORE.config().scoreboard.onTeamChange; }
+    public boolean shouldRevealScoreboardOnTitleChange() { return Config.scoreboard.scoreboard.onChange; }
+    public boolean shouldRevealScoreboardOnScoreChange() { return Config.scoreboard.onScoreChange; }
+    public boolean shouldRevealScoreboardOnTeamChange() { return Config.scoreboard.onTeamChange; }
 
     private void init() {
-        health = new PolicyComponent(CONFIG_STORE.config().health, CONFIG_STORE.config().advanced.health, CONFIG_STORE.config().defaultValues);
-        armor = new PolicyComponent(CONFIG_STORE.config().armor, CONFIG_STORE.config().advanced.armor, CONFIG_STORE.config().defaultValues);
-        hunger = new PolicyComponent(CONFIG_STORE.config().hunger, CONFIG_STORE.config().advanced.hunger, CONFIG_STORE.config().defaultValues);
-        air = new PolicyComponent(CONFIG_STORE.config().air, CONFIG_STORE.config().advanced.air, CONFIG_STORE.config().defaultValues);
-        experience = new BooleanComponent(CONFIG_STORE.config().experience, CONFIG_STORE.config().advanced.experience, CONFIG_STORE.config().defaultValues);
-        mountJumpBar = new BooleanComponent(CONFIG_STORE.config().mountJumpBar, CONFIG_STORE.config().advanced.mountJumpBar, CONFIG_STORE.config().defaultValues);
-        mountHealth = new PolicyComponent(CONFIG_STORE.config().mountHealth, CONFIG_STORE.config().advanced.mountHealth, CONFIG_STORE.config().defaultValues);
-        hotbar = new BooleanComponent(CONFIG_STORE.config().hotbar.hotbar, CONFIG_STORE.config().advanced.hotbar, CONFIG_STORE.config().defaultValues);
-        statusEffects = new BooleanComponent(CONFIG_STORE.config().statusEffects, CONFIG_STORE.config().advanced.statusEffects, CONFIG_STORE.config().defaultValues);
-        scoreboard = new BooleanComponent(CONFIG_STORE.config().scoreboard.scoreboard, CONFIG_STORE.config().advanced.scoreboard, CONFIG_STORE.config().defaultValues);
+        health = new PolicyComponent(Config.health, Config.advanced.health, Config.defaultValues);
+        armor = new PolicyComponent(Config.armor, Config.advanced.armor, Config.defaultValues);
+        hunger = new PolicyComponent(Config.hunger, Config.advanced.hunger, Config.defaultValues);
+        air = new PolicyComponent(Config.air, Config.advanced.air, Config.defaultValues);
+        experience = new BooleanComponent(Config.experience, Config.advanced.experience, Config.defaultValues);
+        mountJumpBar = new BooleanComponent(Config.mountJumpBar, Config.advanced.mountJumpBar, Config.defaultValues);
+        mountHealth = new PolicyComponent(Config.mountHealth, Config.advanced.mountHealth, Config.defaultValues);
+        hotbar = new BooleanComponent(Config.hotbar.hotbar, Config.advanced.hotbar, Config.defaultValues);
+        statusEffects = new BooleanComponent(Config.statusEffects, Config.advanced.statusEffects, Config.defaultValues);
+        scoreboard = new BooleanComponent(Config.scoreboard.scoreboard, Config.advanced.scoreboard, Config.defaultValues);
     }
 }

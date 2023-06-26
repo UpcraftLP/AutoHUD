@@ -1,155 +1,141 @@
 package mod.crend.autohud.config;
 
-import dev.isxander.yacl.config.ConfigEntry;
-import mod.crend.autoyacl.annotation.*;
+import eu.midnightdust.lib.config.MidnightConfig;
 
-@AutoYaclConfig(modid = "autohud", translationKey = "autohud.title", filename = "autohud.json5")
-public class Config implements Cloneable {
+public class Config extends MidnightConfig {
 
     /* MAIN OPTIONS */
-    @ConfigEntry public boolean dynamicOnLoad = true;
-    @IntegerRange(min = 10, max = 200, interval = 10)
-    @ConfigEntry public int ticksRevealed = 40;
-    @ConfigEntry public boolean animationMove = true;
-    @ConfigEntry public boolean animationFade = true;
-    @DoubleRange(min = 1, max = 4.0, interval = 0.25)
-    @ConfigEntry public double animationSpeed = 2.0;
+    @MidnightConfig.Entry
+    public static boolean dynamicOnLoad = true;
+    @MidnightConfig.Entry (min = 10, max = 200, isSlider = true) public static int ticksRevealed = 40;
+    @MidnightConfig.Entry public static boolean animationMove = true;
+    @MidnightConfig.Entry public static boolean animationFade = true;
+    @MidnightConfig.Entry(min = 1, max = 4.0, precision = 100, isSlider = true) public static double animationSpeed = 2.0;
 
     public static class AnimationSpeeds {
         AnimationSpeeds() { }
 
-        @DoubleRange(min = 1, max = 4.0, interval = 0.25)
-        @ConfigEntry public double moveIn = 0;
-        @DoubleRange(min = 1, max = 4.0, interval = 0.25)
-        @ConfigEntry public double moveOut = 0;
-        @DoubleRange(min = 1, max = 4.0, interval = 0.25)
-        @ConfigEntry public double fadeIn = 0;
-        @DoubleRange(min = 1, max = 4.0, interval = 0.25)
-        @ConfigEntry public double fadeOut = 0;
+        @MidnightConfig.Entry(min = 1, max = 4.0, isSlider = true, precision = 100) public double moveIn = 0;
+        @MidnightConfig.Entry(min = 1, max = 4.0, isSlider = true, precision = 100) public double moveOut = 0;
+        @MidnightConfig.Entry(min = 1, max = 4.0, isSlider = true, precision = 100) public double fadeIn = 0;
+        @MidnightConfig.Entry(min = 1, max = 4.0, isSlider = true, precision = 100) public double fadeOut = 0;
     }
-    @ConfigEntry public AnimationSpeeds animationSpeeds = new AnimationSpeeds();
 
-    @Tooltip
-    @ConfigEntry public RevealType revealType = RevealType.Stacked;
-    @Category(name = "components", group = "statusEffects")
-    @Tooltip
-    @ConfigEntry public boolean statusEffectTimer = true;
+    @MidnightConfig.Entry public static AnimationSpeeds animationSpeeds = new AnimationSpeeds();
+
+//    @Tooltip
+    @MidnightConfig.Entry public static RevealType revealType = RevealType.Stacked;
+//    @Category(name = "components", group = "statusEffects")
+//    @Tooltip
+    @MidnightConfig.Entry() public static boolean statusEffectTimer = true;
 
     /* COMPONENTS */
     public static class DefaultValues {
         DefaultValues() { }
 
-        @DoubleRange(min = 0.1, max = 3.0, interval = 0.1)
-        @ConfigEntry public double speedMultiplier = 1.0;
-        @IntegerRange(min = 0, max = 200, interval = 5)
-        @ConfigEntry public int distance = 60;
-        @DoubleRange(min = 0.0, max = 1.0, interval = 0.1)
-        @ConfigEntry public double maximumFade = 0.0d;
+        @MidnightConfig.Entry(min = 0.1, max = 3.0, isSlider = true, precision = 10) public double speedMultiplier = 1.0;
+        @MidnightConfig.Entry(min = 0, max = 200, isSlider = true) public int distance = 60;
+        @MidnightConfig.Entry(min = 0.0, max = 1.0, isSlider = true, precision = 10) public double maximumFade = 0.0d;
     }
-    @Category(name = "advanced")
-    @TransitiveObject
-    @ConfigEntry public DefaultValues defaultValues = new DefaultValues();
+//    @Category(name = "advanced")
+    @MidnightConfig.Entry public static DefaultValues defaultValues = new DefaultValues();
 
     public static class AdvancedComponent {
         AdvancedComponent() { }
 
-        @Translation(key = "autohud.option.advanced.direction")
-        @ConfigEntry public ScrollDirection direction = ScrollDirection.Down;
-        @Translation(key = "autohud.option.advanced.speedMultiplier")
-        @DoubleRange(min = 0.1, max = 3.0, interval = 0.1)
-        @ConfigEntry public double speedMultiplier = -1;
-        @Translation(key = "autohud.option.advanced.distance")
-        @IntegerRange(min = 0, max = 200, interval = 5)
-        @ConfigEntry public int distance = -1;
-        @Translation(key = "autohud.option.advanced.maximumFade")
-        @DoubleRange(min = 0.0, max = 1.0, interval = 0.1)
-        @ConfigEntry public double maximumFade = -1d;
+//        @Translation(key = "autohud.option.advanced.direction")
+        @MidnightConfig.Entry public ScrollDirection direction = ScrollDirection.Down;
+//        @Translation(key = "autohud.option.advanced.speedMultiplier")
+        @MidnightConfig.Entry(min = 0.1, max = 3.0, precision = 10, isSlider = true) public double speedMultiplier = -1;
+//        @Translation(key = "autohud.option.advanced.distance")
+        @MidnightConfig.Entry(min = 0, max = 200, isSlider = true) public int distance = -1;
+//        @Translation(key = "autohud.option.advanced.maximumFade")
+        @MidnightConfig.Entry(min = 0.1, max = 3.0, precision = 10, isSlider = true) public double maximumFade = -1d;
     }
     public static class IComponent {
     }
     public static class SimpleComponent extends IComponent {
         private SimpleComponent() { }
-        @ConfigEntry public boolean active = true;
+
+        @MidnightConfig.Entry public boolean active = true;
     }
     public static class PolicyComponent extends IComponent {
         private PolicyComponent() { }
-        @ConfigEntry public RevealPolicy policy = RevealPolicy.Changing;
+        @MidnightConfig.Entry public RevealPolicy policy = RevealPolicy.Changing;
     }
     public static class BooleanComponent extends IComponent {
         private BooleanComponent() { }
-        @ConfigEntry public boolean active = true;
-        @ConfigEntry public boolean onChange = true;
+        @MidnightConfig.Entry public boolean active = true;
+        @MidnightConfig.Entry public boolean onChange = true;
     }
 
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public PolicyComponent health = new PolicyComponent();
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public PolicyComponent hunger = new PolicyComponent();
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public PolicyComponent air = new PolicyComponent();
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public PolicyComponent armor = new PolicyComponent();
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public BooleanComponent experience = new BooleanComponent();
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public BooleanComponent mountJumpBar = new BooleanComponent();
-    @Category(name = "components", group = "statusBars")
-    @ConfigEntry public PolicyComponent mountHealth = new PolicyComponent();
-    @Category(name = "components", group = "statusEffects")
-    @ConfigEntry public BooleanComponent statusEffects = new BooleanComponent();
-    @Category(name = "components", group = "statusEffects")
-    @Tooltip
-    @ConfigEntry public boolean hidePersistentStatusEffects = true;
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static PolicyComponent health = new PolicyComponent();
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static PolicyComponent hunger = new PolicyComponent();
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static PolicyComponent air = new PolicyComponent();
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static PolicyComponent armor = new PolicyComponent();
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static BooleanComponent experience = new BooleanComponent();
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static BooleanComponent mountJumpBar = new BooleanComponent();
+//    @Category(name = "components", group = "statusBars")
+    @MidnightConfig.Entry public static PolicyComponent mountHealth = new PolicyComponent();
+//    @Category(name = "components", group = "statusEffects")
+    @MidnightConfig.Entry public static BooleanComponent statusEffects = new BooleanComponent();
+//    @Category(name = "components", group = "statusEffects")
+//    @Tooltip
+    @MidnightConfig.Entry public static boolean hidePersistentStatusEffects = true;
 
-    @Category(name = "components")
-    @ConfigEntry public HotbarComponents hotbar = new HotbarComponents();
-    @Category(name = "components")
-    @ConfigEntry public ScoreboardComponents scoreboard = new ScoreboardComponents();
-    @Category(name = "advanced")
-    @Label(key = "autohud.option.advanced.label")
-    @TransitiveObject
-    @ConfigEntry public AdvancedComponents advanced = new AdvancedComponents();
+//    @Category(name = "components")
+    @MidnightConfig.Entry public static HotbarComponents hotbar = new HotbarComponents();
+//    @Category(name = "components")
+    @MidnightConfig.Entry public static ScoreboardComponents scoreboard = new ScoreboardComponents();
+//    @Category(name = "advanced")
+//    @Label(key = "autohud.option.advanced.label")
+//    @TransitiveObject
+    @MidnightConfig.Entry public static AdvancedComponents advanced = new AdvancedComponents();
 
-    
+
     public static class HotbarComponents {
-        @ConfigEntry public BooleanComponent hotbar = new BooleanComponent();
-        @ConfigEntry public boolean onSlotChange = true;
-        @ConfigEntry public boolean onLowDurability = true;
-        @IntegerRange(min = 0, max = 100, interval = 1)
-        @ConfigEntry public int durabilityPercentage = 10;
-        @ConfigEntry public int durabilityTotal = 20;
-        @FloatRange(min = 0.0f, max = 1.0f, interval = 0.1f)
-        @ConfigEntry public float maximumFadeHotbarItems = 0.0f;
+        @MidnightConfig.Entry public BooleanComponent hotbar = new BooleanComponent();
+        @MidnightConfig.Entry public boolean onSlotChange = true;
+        @MidnightConfig.Entry public boolean onLowDurability = true;
+        @MidnightConfig.Entry(min = 0, max = 100, isSlider = true) public int durabilityPercentage = 10;
+        @MidnightConfig.Entry public int durabilityTotal = 20;
+        @MidnightConfig.Entry(min = 0.0F, max = 1.0F, isSlider = true, precision = 10) public float maximumFadeHotbarItems = 0.0f;
     }
-    
+
     public static class ScoreboardComponents {
-        @ConfigEntry public BooleanComponent scoreboard = new BooleanComponent();
-        @ConfigEntry public boolean onScoreChange = true;
-        @Tooltip
-        @ConfigEntry public boolean onTeamChange = true;
+        @MidnightConfig.Entry public BooleanComponent scoreboard = new BooleanComponent();
+        @MidnightConfig.Entry public boolean onScoreChange = true;
+//        @Tooltip
+        @MidnightConfig.Entry public boolean onTeamChange = true;
     }
-    
+
     public static class AdvancedComponents {
-        @Translation(key = "autohud.group.hotbar")
-        @ConfigEntry public AdvancedComponent hotbar = new AdvancedComponent();
-        @Translation(key = "autohud.group.health")
-        @ConfigEntry public AdvancedComponent health = new AdvancedComponent();
-        @Translation(key = "autohud.group.armor")
-        @ConfigEntry public AdvancedComponent armor = new AdvancedComponent();
-        @Translation(key = "autohud.group.hunger")
-        @ConfigEntry public AdvancedComponent hunger = new AdvancedComponent();
-        @Translation(key = "autohud.group.air")
-        @ConfigEntry public AdvancedComponent air = new AdvancedComponent();
-        @Translation(key = "autohud.group.experience")
-        @ConfigEntry public AdvancedComponent experience = new AdvancedComponent();
-        @Translation(key = "autohud.group.mountJumpBar")
-        @ConfigEntry public AdvancedComponent mountJumpBar = new AdvancedComponent();
-        @Translation(key = "autohud.group.mountHealth")
-        @ConfigEntry public AdvancedComponent mountHealth = new AdvancedComponent();
-        @Translation(key = "autohud.group.statusEffects")
-        @ConfigEntry public AdvancedComponent statusEffects = new AdvancedComponent();
-        @Translation(key = "autohud.group.scoreboard")
-        @ConfigEntry public AdvancedComponent scoreboard = new AdvancedComponent();
+//        @Translation(key = "autohud.group.hotbar")
+        @MidnightConfig.Entry public AdvancedComponent hotbar = new AdvancedComponent();
+//        @Translation(key = "autohud.group.health")
+        @MidnightConfig.Entry public AdvancedComponent health = new AdvancedComponent();
+//        @Translation(key = "autohud.group.armor")
+        @MidnightConfig.Entry public AdvancedComponent armor = new AdvancedComponent();
+//        @Translation(key = "autohud.group.hunger")
+        @MidnightConfig.Entry public AdvancedComponent hunger = new AdvancedComponent();
+//        @Translation(key = "autohud.group.air")
+        @MidnightConfig.Entry public AdvancedComponent air = new AdvancedComponent();
+//        @Translation(key = "autohud.group.experience")
+        @MidnightConfig.Entry public AdvancedComponent experience = new AdvancedComponent();
+//        @Translation(key = "autohud.group.mountJumpBar")
+        @MidnightConfig.Entry public AdvancedComponent mountJumpBar = new AdvancedComponent();
+//        @Translation(key = "autohud.group.mountHealth")
+        @MidnightConfig.Entry public AdvancedComponent mountHealth = new AdvancedComponent();
+//        @Translation(key = "autohud.group.statusEffects")
+        @MidnightConfig.Entry public AdvancedComponent statusEffects = new AdvancedComponent();
+//        @Translation(key = "autohud.group.scoreboard")
+        @MidnightConfig.Entry public AdvancedComponent scoreboard = new AdvancedComponent();
         private AdvancedComponents() {
             statusEffects.direction = ScrollDirection.Up;
             scoreboard.direction = ScrollDirection.Right;
@@ -158,12 +144,10 @@ public class Config implements Cloneable {
     }
 
     /* DEFAULT OVERRIDES */
-    public Config() {
+    static {
         hunger.policy = RevealPolicy.Low;
         air.policy = RevealPolicy.NotFull;
     }
 
     /* OPTIONS END */
-
-    public Object clone() throws CloneNotSupportedException { return super.clone(); }
 }
