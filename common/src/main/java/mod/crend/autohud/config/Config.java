@@ -72,9 +72,13 @@ public class Config extends MidnightConfig {
 //    @Category(name = "components", group = "statusBars")
     @MidnightConfig.Entry public static PolicyComponent health = new PolicyComponent();
 //    @Category(name = "components", group = "statusBars")
-    @MidnightConfig.Entry public static PolicyComponent hunger = new PolicyComponent();
+    @MidnightConfig.Entry public static PolicyComponent hunger = new PolicyComponent() {{
+        policy = RevealPolicy.Low;
+}};
 //    @Category(name = "components", group = "statusBars")
-    @MidnightConfig.Entry public static PolicyComponent air = new PolicyComponent();
+    @MidnightConfig.Entry public static PolicyComponent air = new PolicyComponent() {{
+        policy = RevealPolicy.NotFull;
+}};
 //    @Category(name = "components", group = "statusBars")
     @MidnightConfig.Entry public static PolicyComponent armor = new PolicyComponent();
 //    @Category(name = "components", group = "statusBars")
@@ -141,12 +145,6 @@ public class Config extends MidnightConfig {
             scoreboard.direction = ScrollDirection.Right;
             scoreboard.distance = 100;
         }
-    }
-
-    /* DEFAULT OVERRIDES */
-    static {
-        hunger.policy = RevealPolicy.Low;
-        air.policy = RevealPolicy.NotFull;
     }
 
     /* OPTIONS END */
