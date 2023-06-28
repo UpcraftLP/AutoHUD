@@ -1,7 +1,9 @@
 package mod.crend.autohud;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import mod.crend.autohud.api.AutoHudApi;
 import mod.crend.autohud.component.Hud;
+import mod.crend.autohud.config.Config;
 import mod.crend.autohud.config.ConfigHandler;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class AutoHud {
     public static boolean targetStatusEffects = true;
 
     public static void init() {
+        MidnightConfig.init(MOD_ID, Config.class);
         config = new ConfigHandler();
         if (config.dynamicOnLoad()) {
             Hud.enableDynamic();
