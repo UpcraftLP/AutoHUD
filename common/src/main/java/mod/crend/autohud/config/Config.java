@@ -193,7 +193,7 @@ public class Config extends MidnightConfig {
         @MidnightConfig.Entry
         public AdvancedComponent scoreboard = new AdvancedComponent();
 
-        private AdvancedComponents() {
+        public AdvancedComponents() {
             statusEffects.direction = ScrollDirection.Up;
             scoreboard.direction = ScrollDirection.Right;
             scoreboard.distance = 100;
