@@ -29,6 +29,7 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     private void autoHud$updateHealth(float health, CallbackInfo ci) {
         Component.Health.updateState();
     }
+
     @Inject(method = "setExperience", at = @At("TAIL"))
     private void autoHud$setExperience(float progress, int total, int level, CallbackInfo ci) {
         Component.ExperienceBar.updateState();
@@ -36,17 +37,18 @@ public class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
 
     // Jumpbar
-    @Shadow public Input input;
+    @Shadow
+    public Input input;
+
     @Inject(method = "tickMovement", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;getVehicle()Lnet/minecraft/entity/Entity;"))
-    private void autoHud$jumpBarChanged(CallbackInfo ci){
+    private void autoHud$jumpBarChanged(CallbackInfo ci) {
         if (this.input.jumping && AutoHud.config.mountJumpBar().onChange()) Component.MountJumpBar.revealNow();
     }
 
     // Mount health
     @Inject(method = "tickRiding", at = @At("RETURN"))
-    private void autoHud$mountHealthChange(CallbackInfo ci){
-        ClientPlayerEntity thisPlayer = (ClientPlayerEntity) (Object) this;
-        if (AutoHud.config.mountHealth().policy() != RevealPolicy.Disabled && thisPlayer.getVehicle() instanceof LivingEntity vehicle) {
+    private void autoHud$mountHealthChange(CallbackInfo ci) {
+        if (AutoHud.config.mountHealth().policy() != RevealPolicy.Disabled && this.getVehicle() instanceof LivingEntity vehicle) {
             if (Component.MountHealth.state == null) {
                 Component.MountHealth.state = new PolicyComponentState(Component.MountHealth, () -> (int) vehicle.getHealth(), () -> (int) vehicle.getMaxHealth());
                 Component.MountHealth.revealCombined();
